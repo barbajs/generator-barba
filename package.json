@@ -1,0 +1,83 @@
+{
+  "name": "generator-barba",
+  "version": "1.0.0",
+  "description": "Start a barba.js debug, playground, project, …",
+  "files": [
+    "generators"
+  ],
+  "types": "generators/app/index.d.ts",
+  "keywords": [
+    "barba.js",
+    "yeoman-generator"
+  ],
+  "homepage": "https://github.com/barbajs/generator-barba#readme",
+  "bugs": {
+    "url": "https://github.com/barbajs/generator-barba/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/barbajs/generator-barba.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "clean": "rimraf generators",
+    "copy": "cpx 'src/app/templates/**/*' 'generators/app/templates'",
+    "copy:watch": "cpx 'src/app/templates/**/*' 'generators/app/templates' -w",
+    "commit": "npx git-cz || exit 0",
+    "commit-retry": "npx git-cz --retry || exit 0",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
+    "dev": "yarn build:watch",
+    "lint": "tslint src/**/*.ts",
+    "precommit": "lint-staged",
+    "prerelease": "npm-run-all lint clean copy build",
+    "release": "yarn test && standard-version",
+    "start": "npm-run-all clean --parallel copy:watch dev",
+    "test": "yarn unit",
+    "unit": "jest --coverage",
+    "unit:ci": "jest --coverage --maxWorkers=2",
+    "unit:watch": "jest --watch --verbose false"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ccgls"
+    },
+    "cz-ccgls": {
+      "useScopes": false
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@types/dashify": "^1.0.0",
+    "@types/jest": "^24.0.23",
+    "@types/yeoman-generator": "^3.1.4",
+    "commitizen": "^4.0.3",
+    "commitlint-config-ccgls": "^1.1.2",
+    "coveralls": "^3.0.7",
+    "cpx": "^1.5.0",
+    "cz-ccgls": "^0.2.0",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.3",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.0",
+    "standard-version": "^7.0.1",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2",
+    "typescript-tslint-plugin": "^0.5.5"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "dashify": "^2.0.0",
+    "yeoman-generator": "^4.2.0"
+  }
+}

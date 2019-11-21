@@ -1,0 +1,23 @@
+//- layout.pug
+html
+  head
+    block title
+      title barba.js starter kit
+    link(rel='shortcut icon', href='./favicon.ico')
+    link(rel='stylesheet', href='./styles/app.scss')
+<% if (origin === 'cdn') { -%>
+    script(src='https://unpkg.com/@barba/core@<%= version %>')
+<% } -%>
+    script(src='./scripts/app.js')
+  body
+    block nav
+      nav.nav
+        ul
+          li
+            a(href='./index.pug') Home
+          li
+            a(href='./page.pug') Page
+    main.main(data-barba='wrapper')
+      block content
+    footer.footer
+      p barba.js debug powaaa 💪
