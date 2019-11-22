@@ -12,7 +12,7 @@
 
 ## Getting started
 
-> You need [`yarn`](https://yarnpkg.com/lang/en/) and [`yo`](https://yeoman.io/) available globally.
+NB: You need [`yarn`](https://yarnpkg.com/lang/en/) and [`yo`](https://yeoman.io/) available globally.
 
 ```sh
 yarn global add generator-barba
@@ -20,8 +20,6 @@ yo barba
 ```
 
 Answer a few questions and start using `barba.js`… :tada:
-
----
 
 ## How to contribute
 
