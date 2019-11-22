@@ -125,7 +125,7 @@ export default class BarbaGenerator extends Generator {
     // Packages
     const pkg = this.fs.readJSON(this.templatePath('package.json'));
 
-    pkg.name = this.props.name;
+    pkg.name = dest;
 
     if (origin === 'npm' && release !== 'linked') {
       pkg.dependencies['@barba/core'] = version;
