@@ -63,7 +63,8 @@ export default class BarbaGenerator extends Generator {
         {
           message: 'Tell me your version (x.x.x): ',
           name: 'version',
-          validate: input => /\d+\.\d+\.\d+/.test(input),
+          validate: /* istanbul ignore next */ input =>
+            /\d+\.\d+\.\d+/.test(input),
         },
       ]).then(answers => (this.props.version = answers.version));
     }

@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5"
+    "target": "es6",
+    "esModuleInterop": true
   },
-  "include": ["__tests__/**/*.test.ts"],
-  "exclude": ["node_modules", "src/**/*.ts"]
+  "include": ["__tests__/**/*.test.ts", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
