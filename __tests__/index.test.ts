@@ -11,7 +11,7 @@ describe('file system', () => {
     try {
       await yo({}, true);
     } catch (e) {
-      expect(e.message).toMatch(/Unhandled error/);
+      expect(e.message).toMatch(/error/);
     }
   });
 
