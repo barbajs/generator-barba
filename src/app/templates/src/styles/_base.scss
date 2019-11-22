@@ -19,8 +19,7 @@ img {
 }
 
 .nav,
-.main,
-.footer {
+.main {
   width: 100%;
 }
 
@@ -45,7 +44,7 @@ img {
     background-color: $c-blue;
     color: inherit;
     text-decoration: none;
-    transition: background-color .35s ease-in-out;
+    transition: background-color 0.35s ease-in-out;
 
     &:hover {
       background-color: $c-blue-light;
@@ -60,12 +59,4 @@ img {
   > * {
     padding: 2rem;
   }
-}
-
-.footer {
-  background-color: $c-blue;
-  color: $c-white;
-  font-family: monospace;
-  font-size: .8em;
-  text-align: center;
 }
