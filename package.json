@@ -30,9 +30,9 @@
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "dev": "yarn build:watch",
     "lint": "tslint src/**/*.ts",
-    "precommit": "lint-staged",
-    "prerelease": "npm-run-all lint clean copy build",
-    "release": "yarn test && standard-version",
+    "lint:staged": "lint-staged",
+    "prerelease": "npm-run-all lint clean copy build test",
+    "release": "standard-version",
     "start": "npm-run-all clean --parallel copy:watch dev",
     "test": "yarn unit",
     "unit": "jest --coverage",
@@ -41,7 +41,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run precommit",
+      "pre-commit": "yarn lint:staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
