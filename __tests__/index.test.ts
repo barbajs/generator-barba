@@ -5,6 +5,9 @@ const pkg = 'package.json';
 const pug = 'src/layout.pug';
 const js = 'src/scripts/app.js';
 const ico = 'src/favicon.ico';
+const tsConfig = 'tsconfig.json';
+const gsap = 'src/scripts/transitions/gsap.js';
+const animejs = 'src/scripts/transitions/animejs.js';
 
 describe('file system', () => {
   it('check folder', async () => {
@@ -23,6 +26,8 @@ describe('file system', () => {
     assert.file(pug);
     assert.file(js);
     assert.file(ico);
+    assert.file(gsap);
+    assert.file(animejs);
   });
 });
 
@@ -68,5 +73,31 @@ describe('origin', () => {
     assert.fileContent(js, /const { barba }/);
     assert.fileContent(pug, /@barba\/core/);
     assert.fileContent(pug, /latest/);
+  });
+});
+
+describe('language', () => {
+  it('use Javascript', async () => {
+    await yo();
+
+    assert.file(js);
+    assert.noFile(tsConfig);
+    assert.file(gsap);
+    assert.file(animejs);
+    assert.noFileContent(gsap, /ITransitionData/);
+    assert.noFileContent(animejs, /ITransitionData/);
+  });
+
+  it('use TypeScript', async () => {
+    await yo({ language: 'ts' });
+
+    const tsify = (n: string) => n.replace('.js', '.ts');
+
+    assert.file(tsify(js));
+    assert.file(tsConfig);
+    assert.file(tsify(gsap));
+    assert.file(tsify(animejs));
+    assert.fileContent(tsify(gsap), /ITransitionData/);
+    assert.fileContent(tsify(animejs), /ITransitionData/);
   });
 });

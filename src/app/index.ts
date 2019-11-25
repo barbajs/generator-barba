@@ -10,6 +10,7 @@ interface IProps {
   release?: 'latest' | 'next' | 'linked' | 'fixed';
   version?: string;
   origin?: string;
+  language?: 'js' | 'ts';
   lib?: 'gsap' | 'animejs';
 }
 
@@ -82,6 +83,26 @@ export default class BarbaGenerator extends Generator {
       ]).then(answers => (this.props.origin = answers.origin));
     }
 
+    // JS or TS.
+    await this.prompt([
+      {
+        choices: [
+          {
+            name: 'JavaScript',
+            value: 'js',
+          },
+          {
+            name: 'TypeScript',
+            value: 'ts',
+          },
+        ],
+        default: 0,
+        message: 'Preferred language? : ',
+        name: 'language',
+        type: 'list',
+      },
+    ]).then(answers => (this.props.language = answers.language));
+
     // Animation library
     await this.prompt([
       {
@@ -112,9 +133,16 @@ export default class BarbaGenerator extends Generator {
   }
 
   public writing() {
-    const { dest, lib, origin, release, version: v } = this.props;
+    const {
+      dest,
+      language: ext,
+      lib,
+      origin,
+      release,
+      version: v,
+    } = this.props;
     const version = release === 'fixed' ? v : release;
-    const data = { lib, origin, version };
+    const data = { ext, lib, origin, version };
 
     // Copy static files
     this.fs.copy(
@@ -130,20 +158,42 @@ export default class BarbaGenerator extends Generator {
     if (origin === 'npm' && release !== 'linked') {
       pkg.dependencies['@barba/core'] = version;
     }
+    if (ext === 'ts') {
+      pkg.devDependencies['@types/animejs'] = '3.1.0';
+    }
 
     this.fs.writeJSON(this.destinationPath(`${dest}/package.json`), pkg);
 
+    // Files
+    if (ext === 'ts') {
+      this.fs.copy(
+        this.templatePath('tsconfig.json'),
+        this.destinationPath(`${dest}/tsconfig.json`)
+      );
+    }
+
     // Templates
     this.fs.copyTpl(
-      this.templatePath('layout.pug'),
+      this.templatePath('src.layout.pug'),
       this.destinationPath(`${dest}/src/layout.pug`),
       data
     );
+
     this.fs.copyTpl(
-      this.templatePath('app.js'),
-      this.destinationPath(`${dest}/src/scripts/app.js`),
+      this.templatePath('src.scripts.app.js'),
+      this.destinationPath(`${dest}/src/scripts/app.${ext}`),
       data
     );
+
+    const transitions = ['gsap', 'animejs'];
+
+    transitions.forEach(t => {
+      this.fs.copyTpl(
+        this.templatePath(`src.scripts.transitions.${t}.js`),
+        this.destinationPath(`${dest}/src/scripts/transitions/${t}.${ext}`),
+        data
+      );
+    });
   }
 
   public install() {

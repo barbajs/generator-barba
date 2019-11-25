@@ -3,6 +3,7 @@ import path from 'path';
 import helpers from 'yeoman-test';
 
 const defaults = {
+  language: 'js',
   lib: 'gsap',
   name: 'starter-debug',
   origin: 'npm',

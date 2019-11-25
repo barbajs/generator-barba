@@ -1,9 +1,12 @@
+<% if (ext === 'ts') { -%>
+import { ITransitionData } from '@barba/core';
+<% } -%>
 import anime from 'animejs';
 
 const duration = 1000;
 
 export default {
-  leave({ current }) {
+  leave({ current }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
     const { container: targets } = current;
 
     return anime({
@@ -16,7 +19,7 @@ export default {
     }).finished;
   },
 
-  enter({ current, next }) {
+  enter({ current, next }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
     const { container: targets } = next;
 
     current.container.remove();

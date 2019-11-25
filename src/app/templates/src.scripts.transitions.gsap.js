@@ -1,17 +1,20 @@
+<% if (ext === 'ts') { -%>
+import { ITransitionData } from '@barba/core';
+<% } -%>
 import gsap from 'gsap';
 
 const duration = 1;
 
 export default {
-  async leave({ current }) {
+  async leave({ current }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
     await gsap.to(current.container, {
       duration,
       opacity: 0,
       ease: 'power4.easeIn',
-    }).then();
+    }).then(<% if (ext === 'ts') { -%>() => {}<% } -%>);
   },
 
-  async enter({ current, next }) {
+  async enter({ current, next }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
     current.container.remove();
 
     // DEV: previously (v2), working without `set` step (from: 0)
@@ -21,6 +24,6 @@ export default {
       duration,
       opacity: 1,
       ease: 'power4.easeOut',
-    }).then();
+    }).then(<% if (ext === 'ts') { -%>() => {}<% } -%>);
   },
 };
