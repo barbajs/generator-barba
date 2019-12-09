@@ -68,6 +68,9 @@ export default class BarbaGenerator extends Generator {
             /\d+\.\d+\.\d+/.test(input),
         },
       ]).then(answers => (this.props.version = answers.version));
+    } else {
+      this.props.version =
+        this.props.release === 'linked' ? 'latest' : this.props.release;
     }
 
     // Origin: NPM or CDN.
@@ -81,6 +84,8 @@ export default class BarbaGenerator extends Generator {
           type: 'list',
         },
       ]).then(answers => (this.props.origin = answers.origin));
+    } else {
+      this.props.origin = 'npm';
     }
 
     // JS or TS.
@@ -133,15 +138,7 @@ export default class BarbaGenerator extends Generator {
   }
 
   public writing() {
-    const {
-      dest,
-      language: ext,
-      lib,
-      origin,
-      release,
-      version: v,
-    } = this.props;
-    const version = release === 'fixed' ? v : release;
+    const { dest, language: ext, lib, origin, release, version } = this.props;
     const data = { ext, lib, origin, version };
 
     // Copy static files
@@ -204,6 +201,8 @@ export default class BarbaGenerator extends Generator {
       `> ${chalk.cyan('📦 Installing dependencies with `yarn install`')}`
     );
     this.yarnInstall();
+
+    // TODO for 'linked', add @barba/core to package.json and run `npm link @barba/core`
   }
 
   public end() {
