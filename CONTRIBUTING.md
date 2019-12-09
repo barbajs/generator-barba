@@ -13,7 +13,7 @@ This project uses:
 
 ## Install
 
-- `git clone git@github.com:epicagency/slidy.git`
+- `git clone git@github.com:barbajs/generator-barba.git`
 - `cd slidy`
 - `yarn install` or `npm install`
 
