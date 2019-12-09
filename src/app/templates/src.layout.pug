@@ -3,19 +3,16 @@ html
   head
     block title
       title barba.js starter kit
-    link(rel='shortcut icon', href='./favicon.ico')
-    link(rel='stylesheet', href='./styles/app.scss')
 <% if (origin === 'cdn') { -%>
     script(src='https://unpkg.com/@barba/core@<%= version %>')
 <% } -%>
-    script(src='./scripts/app.<%= ext %>')
   body
     block nav
       nav.nav
         ul
           li
-            a(href='./index.pug') Home
+            a(href='./index.html') Home
           li
-            a(href='./page.pug') Page
+            a(href='./page.html') Page
     main.main(data-barba='wrapper')
       block content

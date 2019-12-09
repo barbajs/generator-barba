@@ -1,13 +1,13 @@
 <% if (ext === 'ts') { -%>
-import { ITransitionData } from '@barba/core';
+import { ITransitionData } from '@barba/core'
 <% } -%>
-import anime from 'animejs';
+import anime from 'animejs'
 
-const duration = 1000;
+const duration = 1000
 
 export default {
   leave({ current }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
-    const { container: targets } = current;
+    const { container: targets } = current
 
     return anime({
       targets,
@@ -16,13 +16,13 @@ export default {
         duration,
       },
       easing: 'easeInQuart',
-    }).finished;
+    }).finished
   },
 
   enter({ current, next }<% if (ext === 'ts') { -%>: ITransitionData<% } -%>) {
-    const { container: targets } = next;
+    const { container: targets } = next
 
-    current.container.remove();
+    current.container.remove()
 
     return anime({
       targets,
@@ -31,6 +31,6 @@ export default {
         duration,
       },
       easing: 'easeOutQuart',
-    }).finished;
+    }).finished
   },
-};
+}

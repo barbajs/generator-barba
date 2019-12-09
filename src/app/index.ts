@@ -103,6 +103,7 @@ export default class BarbaGenerator extends Generator {
         ],
         default: 0,
         message: 'Preferred language? : ',
+
         name: 'language',
         type: 'list',
       },
@@ -146,6 +147,15 @@ export default class BarbaGenerator extends Generator {
       this.templatePath('src/**/*'),
       this.destinationPath(`${dest}/src/`)
     );
+    this.fs.copy(
+      this.templatePath('root/**/*'),
+      this.destinationPath(`${dest}/`),
+      {
+        globOptions: {
+          dot: true,
+        },
+      }
+    );
 
     // Packages
     const pkg = this.fs.readJSON(this.templatePath('package.json'));
@@ -167,6 +177,10 @@ export default class BarbaGenerator extends Generator {
         this.templatePath('tsconfig.json'),
         this.destinationPath(`${dest}/tsconfig.json`)
       );
+      this.fs.copy(
+        this.templatePath('tslint.json'),
+        this.destinationPath(`${dest}/tslint.json`)
+      );
     }
 
     // Templates
@@ -182,6 +196,12 @@ export default class BarbaGenerator extends Generator {
       data
     );
 
+    this.fs.copyTpl(
+      this.templatePath('webpack.config.js'),
+      this.destinationPath(`${dest}/webpack.config.js`),
+      data
+    );
+
     const transitions = ['gsap', 'animejs'];
 
     transitions.forEach(t => {
@@ -194,7 +214,8 @@ export default class BarbaGenerator extends Generator {
   }
 
   public install() {
-    const { dest } = this.props;
+    const done = this.async();
+    const { dest, release } = this.props;
 
     process.chdir(path.join(process.cwd(), dest));
     this.log(
@@ -202,7 +223,11 @@ export default class BarbaGenerator extends Generator {
     );
     this.yarnInstall();
 
-    // TODO for 'linked', add @barba/core to package.json and run `npm link @barba/core`
+    if (release === 'linked') {
+      this.spawnCommand('yarn', ['link', '@barba/core']).on('close', done);
+    }
+
+    done();
   }
 
   public end() {
