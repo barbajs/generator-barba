@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/barbajs/generator-barba/compare/v1.1.0...v1.2.0) (2019-12-09)
+
+
+### Features
+
+* :recycle: move to webpack ([ff50860](https://github.com/barbajs/generator-barba/commit/ff50860a3b0da186a750134755e0ba4a84aeef39))
+
+
+### Bug Fixes
+
+* :bug: fix version for any release ([f7157f2](https://github.com/barbajs/generator-barba/commit/f7157f2b824756ebb64e78a85729a0aa67d6b17e))
+
 ## [1.1.0](https://github.com/barbajs/generator-barba/compare/v1.0.0...v1.1.0) (2019-11-25)
 
 ### Features
